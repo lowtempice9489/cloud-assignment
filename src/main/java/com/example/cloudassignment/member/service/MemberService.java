@@ -1,5 +1,7 @@
 package com.example.cloudassignment.member.service;
 
+import com.example.cloudassignment.global.exception.GlobalExceptionHandler;
+import com.example.cloudassignment.global.exception.MemberNotFoundException;
 import com.example.cloudassignment.member.dto.MemberCreateRequest;
 import com.example.cloudassignment.member.dto.MemberResponse;
 import com.example.cloudassignment.member.entity.Member;
@@ -30,7 +32,7 @@ public class MemberService {
     @Transactional(readOnly = true)
     public MemberResponse getMember(Long memberId) {
         Member member = memberRepository.findById(memberId).orElseThrow(
-                () -> new IllegalStateException("존재하지 않는 멤버 입니다")
+                () -> new MemberNotFoundException(memberId)
         );
         return MemberResponse.from(member);
 

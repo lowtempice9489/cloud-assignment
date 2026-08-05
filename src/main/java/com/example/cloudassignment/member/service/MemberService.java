@@ -1,6 +1,5 @@
 package com.example.cloudassignment.member.service;
 
-import com.example.cloudassignment.global.exception.GlobalExceptionHandler;
 import com.example.cloudassignment.global.exception.MemberNotFoundException;
 import com.example.cloudassignment.member.dto.MemberCreateRequest;
 import com.example.cloudassignment.member.dto.MemberResponse;

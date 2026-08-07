@@ -25,6 +25,18 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
     }
 
+    @ExceptionHandler(ProfileImageNotFoundException.class)
+    public ResponseEntity<ErrorResponse> handleProfileImageNotFoundException(ProfileImageNotFoundException exception) {
+        log.error("프로필 이미지 조회 중 오류가 발생했습니다", exception);
+
+        ErrorResponse response = new ErrorResponse(
+                HttpStatus.NOT_FOUND.value(),
+                "PROFILE_IMAGE_NOT_FOUND",
+                exception.getMessage()
+        );
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
+    }
+
 //    MethodArgumentNotValidException → 400 Bad Request (@Valid 실패)
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<ErrorResponse> handleMethodArgumentNotValidException(MethodArgumentNotValidException exception) {
@@ -56,6 +68,19 @@ public class GlobalExceptionHandler {
         );
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
     }
+
+    @ExceptionHandler(IllegalArgumentException.class)
+    public ResponseEntity<ErrorResponse> handleIllegalArgumentException(IllegalArgumentException exception) {
+        log.error("잘못된 요청값이 전달되었습니다", exception);
+
+        ErrorResponse response = new ErrorResponse(
+                HttpStatus.BAD_REQUEST.value(),
+                "INVALID_REQUEST",
+                exception.getMessage()
+        );
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+    }
+
 
 //    Exception → 500 Internal Server Error (예상하지 못한 오류)
     @ExceptionHandler(Exception.class)

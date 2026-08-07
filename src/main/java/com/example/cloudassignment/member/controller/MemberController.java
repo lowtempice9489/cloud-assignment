@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 @RestController
 @RequiredArgsConstructor
@@ -24,6 +25,21 @@ public class MemberController {
     @GetMapping("/{memberId}")
     public ResponseEntity<MemberResponse> getMember(@PathVariable Long memberId) {
         return ResponseEntity.ok(memberService.getMember(memberId));
+    }
+
+    @PostMapping("/{memberId}/profile-image")
+    public ResponseEntity<Void> uploadProfileImage(
+            @PathVariable Long memberId,
+            @RequestParam("file") MultipartFile file
+    ) {
+        memberService.uploadProfileImage(memberId, file);
+        return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/{memberId}/profile-image")
+    public ResponseEntity<String> getProfileImageUrl(@PathVariable Long memberId) {
+        String presignedUrl = memberService.getProfileImageUrl(memberId);
+        return ResponseEntity.ok(presignedUrl);
     }
 
 }

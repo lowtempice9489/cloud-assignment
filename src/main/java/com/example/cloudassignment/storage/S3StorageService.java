@@ -23,6 +23,10 @@ public class S3StorageService {
     private String bucketName;
 
     public String uploadProfileImage(Long memberId, MultipartFile file) {
+        if (file == null || file.isEmpty()) {
+            throw new IllegalArgumentException("프로필 이미지 파일은 비어 있을 수 없습니다");
+        }
+
         String objectKey = createObjectKey(memberId, file);
         try {
             s3Template.upload(bucketName, objectKey, file.getInputStream());
@@ -45,10 +49,10 @@ public class S3StorageService {
         String originalFilename = file.getOriginalFilename();
         String extension = getExtension(originalFilename);
 
-        return "profile-images"
+        return "profile-images/"
                 +memberId
                 + "/"
-                + UUID.randomUUID().toString()
+                + UUID.randomUUID()
                 + extension;
     }
 

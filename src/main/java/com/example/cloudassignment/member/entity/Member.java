@@ -20,9 +20,16 @@ public class Member {
     @Enumerated(EnumType.STRING)
     private Mbti mbti;
 
+    private String profileImageKey;
+
     public Member(String name, Integer age, Mbti mbti) {
         this.name = name;
         this.age = age;
         this.mbti = mbti;
     }
+
+    public void updateProfileImageKey(String profileImageKey) {
+        this.profileImageKey = profileImageKey;
+    }
+
 }
